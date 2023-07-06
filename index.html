@@ -1,0 +1,311 @@
+<head>
+    <title>Restaurant POS</title>
+   <meta name="author" content="Anowar Hossain Rana">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <style>
+        body {
+            padding: 20px;
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-image: url('https://cdn.pixabay.com/photo/2017/05/16/21/45/coffee-2319107_1280.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+      
+      .logo {
+    text-align: center;
+    margin-bottom: 10px;
+      }
+
+      .logo-img {
+    width: 400px; /* Adjust the size as per your needs */
+    height: auto;
+    }
+
+      .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item input {
+            width: 50px;
+        }
+
+        .menu-item i {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .menu-item .menu-item-icon {
+            font-size: 32px;
+            margin-right: 10px;
+        }
+
+        .order-items {
+            margin-top: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .total-price {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        
+        .print-icon {
+            cursor: pointer;
+            color: #007bff;
+        }
+        
+        .bill-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .bill-logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        
+        .bill-heading {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .bill-info {
+            margin-bottom: 10px;
+        }
+        
+        .bill-items {
+            margin-top: 20px;
+        }
+        
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .bill-item .bill-item-thumb {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .bill-total {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        
+        .floating-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px 0 0 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="logo">
+        <img src="https://i.imgur.com/Qv67Tyq.png" alt="Restaurant Logo" class="logo-img">
+    </div>
+    <div>
+            <h2 class="animate__animated animate__fadeIn">Menu</h2>
+            <div class="menu-item animate__animated animate__fadeIn">
+                <span><i class="fas fa-hamburger menu-item-icon" style="color: #f44336;"></i> Burger</span>
+                <input type="number" id="burger-quantity" value="0">
+                <i class="fas fa-plus-circle" onclick="incrementQuantity('burger-quantity')"></i>
+                <i class="fas fa-minus-circle" onclick="decrementQuantity('burger-quantity')"></i>
+                <button class="btn btn-primary btn-custom" onclick="calculateTotal()">Add to Order</button>
+            </div>
+            <div class="menu-item animate__animated animate__fadeIn">
+                <span><i class="fas fa-pizza-slice menu-item-icon" style="color: #4caf50;"></i> Pizza</span>
+                <input type="number" id="pizza-quantity" value="0">
+                <i class="fas fa-plus-circle" onclick="incrementQuantity('pizza-quantity')"></i>
+                <i class="fas fa-minus-circle" onclick="decrementQuantity('pizza-quantity')"></i>
+                <button class="btn btn-primary btn-custom" onclick="calculateTotal()">Add to Order</button>
+            </div>
+            <div class="menu-item animate__animated animate__fadeIn">
+                <span><i class="fas fa-utensils menu-item-icon" style="color: #2196f3;"></i> Salad</span>
+                <input type="number" id="salad-quantity" value="0">
+                <i class="fas fa-plus-circle" onclick="incrementQuantity('salad-quantity')"></i>
+                <i class="fas fa-minus-circle" onclick="decrementQuantity('salad-quantity')"></i>
+                <button class="btn btn-primary btn-custom" onclick="calculateTotal()">Add to Order</button>
+            </div>
+            <div class="menu-item animate__animated animate__fadeIn">
+                <span><i class="fas fa-coffee menu-item-icon" style="color: #ff9800;"></i> Coffee</span>
+                <input type="number" id="coffee-quantity" value="0">
+                <i class="fas fa-plus-circle" onclick="incrementQuantity('coffee-quantity')"></i>
+                <i class="fas fa-minus-circle" onclick="decrementQuantity('coffee-quantity')"></i>
+                <button class="btn btn-primary btn-custom" onclick="calculateTotal()">Add to Order</button>
+            </div>
+        </div>
+        <div>
+            <h2 class="animate__animated animate__fadeIn">Order</h2>
+            <div id="order-items" class="order-items animate__animated animate__fadeIn">
+                <!-- Order items will be dynamically added here -->
+            </div>
+            <div class="total-price animate__animated animate__fadeIn">Total: $<span id="total-price">0</span></div>
+            <div class="mt-4">
+                <input type="text" id="customer-name" placeholder="Customer Name" class="form-control">
+            </div>
+            <div class="mt-4">
+                <label for="payment-options">Payment Options:</label>
+                <select id="payment-options" class="form-control">
+                    <option value="cash">Cash</option>
+                    <option value="card">Card</option>
+                    <option value="tap">Tap</option>
+                </select>
+            </div>
+            <div class="mt-4">
+                <label for="dine-options">Dine Options:</label>
+                <div id="dine-options" class="form-check">
+                    <input type="radio" id="dine-in" name="dine-option" value="dine-in" class="form-check-input">
+                    <label for="dine-in" class="form-check-label">Dine In</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="dine-out" name="dine-option" value="dine-out" class="form-check-input">
+                    <label for="dine-out" class="form-check-label">Dine Out</label>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-custom mt-4" onclick="printBill()">Print Bill</button>
+        </div>
+    </div>
+
+    <div class="floating-bar">
+        Today's Total Sales: $<span id="today-sales-amount">0</span>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function incrementQuantity(id) {
+            let input = document.getElementById(id);
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decrementQuantity(id) {
+            let input = document.getElementById(id);
+            if (parseInt(input.value) > 0) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
+        function calculateTotal() {
+            let burgerQuantity = parseInt($("#burger-quantity").val());
+            let pizzaQuantity = parseInt($("#pizza-quantity").val());
+            let saladQuantity = parseInt($("#salad-quantity").val());
+            let coffeeQuantity = parseInt($("#coffee-quantity").val());
+
+            let totalPrice = burgerQuantity * 5 + pizzaQuantity * 8 + saladQuantity * 4 + coffeeQuantity * 3;
+
+            $("#total-price").text(totalPrice);
+
+            // Create order item entries
+            let orderItems = $("#order-items");
+            orderItems.empty();
+
+            if (burgerQuantity > 0) {
+                orderItems.append("<div class='order-item'><i class='fas fa-hamburger bill-item-thumb' style='color: #f44336;'></i> Burger x " + burgerQuantity + "</div>");
+            }
+
+            if (pizzaQuantity > 0) {
+                orderItems.append("<div class='order-item'><i class='fas fa-pizza-slice bill-item-thumb' style='color: #4caf50;'></i> Pizza x " + pizzaQuantity + "</div>");
+            }
+
+            if (saladQuantity > 0) {
+                orderItems.append("<div class='order-item'><i class='fas fa-utensils bill-item-thumb' style='color: #2196f3;'></i> Salad x " + saladQuantity + "</div>");
+            }
+
+            if (coffeeQuantity > 0) {
+                orderItems.append("<div class='order-item'><i class='fas fa-coffee bill-item-thumb' style='color: #ff9800;'></i> Coffee x " + coffeeQuantity + "</div>");
+            }
+        }
+
+        function printBill() {
+            let customerName = $("#customer-name").val();
+            let paymentOption = $("#payment-options").val();
+            let dineOption = $("input[name='dine-option']:checked").val();
+            let totalPrice = $("#total-price").text();
+            
+            // Generate bill content
+            let billContent = `
+                <div class="bill-container">
+                    <img src="https://i.imgur.com/Qv67Tyq.png" class="bill-logo" alt="Restaurant Logo">
+                    <h2 class="bill-heading">Customer Bill</h2>
+                    <div class="bill-info">
+                        <span>Customer: ${customerName}</span><br>
+                        <span>Payment Option: ${paymentOption}</span><br>
+                        <span>Dine Option: ${dineOption}</span><br>
+                    </div>
+                    <div class="bill-items">
+                        <!-- Order items will be dynamically added here -->
+                    </div>
+                    <div class="bill-total">Total: $${totalPrice}</div>
+                </div>
+            `;
+            
+            // Open print window
+            let printWindow = window.open('', '', 'width=900,height=900');
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Print Bill</title></head><body>');
+            printWindow.document.write(billContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+        
+        $(document).ready(function() {
+            // Randomly generate today's total sales amount
+            let todaySalesAmount = Math.floor(Math.random() * 1000) + 500;
+            $("#today-sales-amount").text(todaySalesAmount);
+        });
+    </script>
+</body>
+
